@@ -1,0 +1,43 @@
+---
+- name: Check if kubelet, kubeadm, kubectl and docker are installed
+  block:
+    - name: Check if kubelet is installed
+      command: "dpkg -s kubelet" # The command dpkg -s is used to check the status of a Debian package installed on the system
+      register: kubelet_installed
+      ignore_errors: true
+
+    - name: Check if kubeadm is installed
+      command: "dpkg -s kubeadm" # The command dpkg -s is used to check the status of a Debian package installed on the system
+      register: kubeadm_installed
+      ignore_errors: true
+
+    - name: Check if kubectl is installed
+      command: "dpkg -s kubectl" # The command dpkg -s is used to check the status of a Debian package installed on the system
+      register: kubectl_installed
+      ignore_errors: true
+
+    - name: Check if docker is installed
+      command: "dpkg -s docker-ce" # The command dpkg -s is used to check the status of a Debian package installed on the system
+      register: docker_installed
+      ignore_errors: true
+    
+    - name: Check if splunk is installed
+      command: "dpkg -s splunk" # The command dpkg -s is used to check the status of a Debian package installed on the system
+      register: splunk_installed
+      ignore_errors: true
+
+    - name: Display installed packages
+      debug:
+        msg:
+          - "kubelet is {{ 'installed' if kubelet_installed.rc == 0 else 'not installed' }}"
+          - "kubeadm is {{ 'installed' if kubeadm_installed.rc == 0 else 'not installed' }}"
+          - "kubectl is {{ 'installed' if kubectl_installed.rc == 0 else 'not installed' }}"
+          - "docker is {{ 'installed' if docker_installed.rc == 0 else 'not installed' }}"
+          - "splunk is {{ 'installed' if splunk_installed.rc == 0 else 'not installed' }}"
+
+  when: ansible_os_family == "Debian"
+
+  tags:
+    - check_apt_install
+
+...

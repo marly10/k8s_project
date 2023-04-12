@@ -1,0 +1,10 @@
+---
+- name: Configure the EC2
+  hosts: all
+  become_method: sudo
+  become: yes
+  gather_facts: yes
+  roles:
+    - system-backend
+
+...

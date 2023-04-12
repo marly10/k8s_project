@@ -1,0 +1,17 @@
+---
+- name: Include Docker config tasks
+  include_tasks: docker_config.yml
+  tags: 
+    - config_docker
+
+- name: Include k8s config tasks
+  include_tasks: k8s_config.yml
+  tags: 
+    - config_k8s
+
+- name: Include k8s config tasks
+  include_tasks: check_apt_install.yml
+  tags: 
+    - check_apt_install
+
+...
