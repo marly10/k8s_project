@@ -1,0 +1,17 @@
+---
+- name: Include Docker config tasks
+  include_tasks: docker_config.yml
+  tags: 
+    - config_docker
+
+- name: Install pods
+  include_tasks: install_pods.yml
+  tags: 
+    - install_k8s_pods
+
+- name: Check pods status
+  include_tasks: check_pod_status.yml
+  tags: 
+    - check_k8s_pods
+
+...

@@ -1,0 +1,10 @@
+---
+- name: K8s Install
+  hosts: all
+  become_method: sudo
+  become: yes
+  gather_facts: yes
+  roles:
+    - k8s_install
+
+...

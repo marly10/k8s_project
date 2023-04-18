@@ -23,6 +23,22 @@
       - kubectl
       state: present
 
+  - name: Install pip3
+    raw: sudo apt -y update &&  apt install -y python3-pip
+    changed_when: false
+
+  - name: Install kubernetes Python library
+    become: true
+    pip:
+      name: kubernetes
+      state: present
+  
+  - name: Check kubelet service status
+    systemd:
+      name: kubelet
+      state: started
+      enabled: yes
+
   tags:
   - config_k8s
   - config

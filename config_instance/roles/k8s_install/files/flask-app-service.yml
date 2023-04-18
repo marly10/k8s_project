@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-flask-app
+  labels:
+    app: my-flask-app
+spec:
+  selector:
+    app: my-flask-app
+  ports:
+    - name: http
+      hosts: localhost
+      port: 80
+      targetPort: 5000
+  type: LoadBalancer

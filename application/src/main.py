@@ -1,67 +1,79 @@
-from fastapi import FastAPI
-from pydantic import BaseModel
+from flask import Flask, jsonify, request
 
-app = FastAPI()
+app = Flask(__name__)
 
 plants = []
 tasks = []
 
-class Plant(BaseModel):
-    name: str
-    type: str
-    age: int
+class Plant:
+    def __init__(self, name, type, age):
+        self.name = name
+        self.type = type
+        self.age = age
 
-class Task(BaseModel):
-    title: str
-    description: str
-    done: bool
+class Task:
+    def __init__(self, title, description, done):
+        self.title = title
+        self.description = description
+        self.done = done
 
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
+@app.route("/")
+def root():
+    return jsonify({"message": "Hello World"})
 
-@app.post("/plants")
-async def create_plant(plant: Plant):
-    plants.append(plant)
-    return plant
+@app.route("/plants", methods=["POST"])
+def create_plant():
+    data = request.get_json()
+    plant = Plant(data['name'], data['type'], data['age'])
+    plants.append(plant.__dict__)
+    return jsonify(plant.__dict__)
 
-@app.get("/plants")
-async def read_plants():
-    return plants
+@app.route("/plants")
+def read_plants():
+    return jsonify(plants)
 
-@app.get("/plants/{plant_id}")
-async def read_plant(plant_id: int):
-    return plants[plant_id]
+@app.route("/plants/<int:plant_id>")
+def read_plant(plant_id):
+    return jsonify(plants[plant_id])
 
-@app.put("/plants/{plant_id}")
-async def update_plant(plant_id: int, plant: Plant):
-    plants[plant_id] = plant
-    return plant
+@app.route("/plants/<int:plant_id>", methods=["PUT"])
+def update_plant(plant_id):
+    data = request.get_json()
+    plant = Plant(data['name'], data['type'], data['age'])
+    plants[plant_id] = plant.__dict__
+    return jsonify(plant.__dict__)
 
-@app.delete("/plants/{plant_id}")
-async def delete_plant(plant_id: int):
+@app.route("/plants/<int:plant_id>", methods=["DELETE"])
+def delete_plant(plant_id):
     plants.pop(plant_id)
-    return {"message": "Plant deleted"}
+    return jsonify({"message": "Plant deleted"})
 
-@app.post("/tasks")
-async def create_task(task: Task):
-    tasks.append(task)
-    return task
+@app.route("/tasks", methods=["POST"])
+def create_task():
+    data = request.get_json()
+    task = Task(data['title'], data['description'], data['done'])
+    tasks.append(task.__dict__)
+    return jsonify(task.__dict__)
 
-@app.get("/tasks")
-async def read_tasks():
-    return tasks
+@app.route("/tasks")
+def read_tasks():
+    return jsonify(tasks)
 
-@app.get("/tasks/{task_id}")
-async def read_task(task_id: int):
-    return tasks[task_id]
+@app.route("/tasks/<int:task_id>")
+def read_task(task_id):
+    return jsonify(tasks[task_id])
 
-@app.put("/tasks/{task_id}")
-async def update_task(task_id: int, task: Task):
-    tasks[task_id] = task
-    return task
+@app.route("/tasks/<int:task_id>", methods=["PUT"])
+def update_task(task_id):
+    data = request.get_json()
+    task = Task(data['title'], data['description'], data['done'])
+    tasks[task_id] = task.__dict__
+    return jsonify(task.__dict__)
 
-@app.delete("/tasks/{task_id}")
-async def delete_task(task_id: int):
+@app.route("/tasks/<int:task_id>", methods=["DELETE"])
+def delete_task(task_id):
     tasks.pop(task_id)
-    return {"message": "Task deleted"}
+    return jsonify({"message": "Task deleted"})
+
+if __name__ == '__main__':
+    app.run(debug=True)

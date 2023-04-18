@@ -1,0 +1,21 @@
+---
+- name: Deploy my-flask-app service and deployment
+  block:
+
+    - name: Copy service and deployment files to server
+      copy:
+        src: "{{ item }}"
+        dest: "/tmp/{{ item }}"
+      with_items:
+        - "{{ service_file }}"
+        - "{{ deployment_file }}"
+
+    - name: Apply service and deployment
+      shell: "kubectl apply -f /tmp/{{ item }}"
+      with_items:
+        - "{{ service_file }}"
+        - "{{ deployment_file }}"
+
+  tags:
+  - install_k8s_pods
+...

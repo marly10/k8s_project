@@ -1,0 +1,35 @@
+---
+- name: Check nodes
+  block:
+  - name: Check nodes status
+    k8s_info:
+      kind: Node
+    register: nodes
+
+  - name: Check pods status
+    k8s_info:
+      kind: Pod
+      namespace: default
+    register: pods
+
+  - name: Check services status
+    k8s_info:
+      kind: Service
+      namespace: default
+    register: services
+
+  - name: Print node status
+    debug:
+      var: nodes.resources[0].status
+
+  - name: Print pod status
+    debug:
+      var: pods.resources[0].status
+
+  - name: Print service status
+    debug:
+      var: services.resources[0].status
+
+  tags:
+  - check_k8s_pods
+...
