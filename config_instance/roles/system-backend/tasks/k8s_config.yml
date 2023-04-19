@@ -1,3 +1,4 @@
+---
 - name: Install Kubernetes
   block:
   - name: Add Kubernetes apt-key
@@ -32,7 +33,30 @@
     pip:
       name: kubernetes
       state: present
-  
+
+  - name: Start Docker service
+    systemd:
+      name: docker
+      state: started
+      enabled: yes
+
+  - name: Initialize Kubernetes
+    command: kubeadm init --apiserver-advertise-address={{ ansible_default_ipv4.address }} --ignore-preflight-errors=all
+    args:
+      creates: /etc/kubernetes/admin.conf
+    register: kubeadm_init_output
+    changed_when: "'kubeadm join' in kubeadm_init_output.stdout"
+
+  - name: Install Flannel pod network add-on
+    command: "kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml"
+    args:
+      creates: "/etc/kubernetes/manifests/kube-flannel.yaml"
+
+  - name: Install Kubernetes Dashboard add-on
+    command: "kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.2.0/aio/deploy/recommended.yaml"
+    args:
+      creates: "/etc/kubernetes/manifests/kubernetes-dashboard.yaml"
+
   - name: Check kubelet service status
     systemd:
       name: kubelet
@@ -43,3 +67,4 @@
   - config_k8s
   - config
 
+...

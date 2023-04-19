@@ -10,6 +10,6 @@ spec:
   ports:
     - name: http
       hosts: localhost
-      port: 80
+      port: 8080
       targetPort: 5000
   type: LoadBalancer

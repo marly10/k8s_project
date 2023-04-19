@@ -1,3 +1,4 @@
 ---
 service_file: "flask-app-service.yml"
 deployment_file: "flask-app-deployment.yml"
+k8_config: "k8s-config.yml"

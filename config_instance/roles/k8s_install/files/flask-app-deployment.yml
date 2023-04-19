@@ -17,3 +17,8 @@ spec:
         image: ricky1101/my-flask-app:v1
         ports:
         - containerPort: 5000
+        env:
+        - name: FLASK_APP
+          value: main.py
+        - name: FLASK_ENV
+          value: development

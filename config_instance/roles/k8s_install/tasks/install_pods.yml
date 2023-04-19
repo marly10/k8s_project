@@ -7,9 +7,10 @@
         src: "{{ item }}"
         dest: "/tmp/{{ item }}"
       with_items:
+        - "{{ k8_config }}"
         - "{{ service_file }}"
         - "{{ deployment_file }}"
-
+        
     - name: Apply service and deployment
       shell: "kubectl apply -f /tmp/{{ item }}"
       with_items:
