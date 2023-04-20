@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Flask Website</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Welcome to my Flask website!</h1>
+    <h2>Plants:</h2>
+    <ul>
+        {% for plant in plants %}
+        <li>{{ plant.name }} ({{ plant.type }}, {{ plant.age }} years old)</li>
+        {% endfor %}
+    </ul>
+    <h2>Tasks:</h2>
+    <ul>
+        {% for task in tasks %}
+        <li>{{ task.title }} - {{ task.description }} ({{ 'done' if task.done else 'not done' }})</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
