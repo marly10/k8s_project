@@ -1,0 +1,7 @@
+---
+- name: Install Flask components
+  include_tasks: flask_installer.yml
+  tags: 
+    - install_flask
+
+...
