@@ -1,0 +1,34 @@
+---
+- name: Check if required packages are installed
+  block:
+
+  - name: Clone Git repo
+    git:
+      repo: https://github.com/marly10/k8s_project
+      dest: /opt/{{ app_name }}
+      version: feature/gha
+
+  - name: Build Docker image
+    docker_image:
+      build:
+        path: /opt/{{ app_name }}/plant_project/application/src
+        dockerfile: dockerfile
+      name: "{{ app_name }}"
+      tag: latest
+
+  - name: Start Docker container
+    docker_container:
+      name: "{{ app_name }}"
+      image: "{{ app_name }}:latest"
+      ports:
+        - "{{ app_port}}:{{ app_port }}"
+        - "{{ elastic_port }}:{{ elastic_port }}"
+        - "{{ elastic_http_port }}:{{ elastic_http_port }}"
+        - "{{ kibana_port }}:{{ kibana_port }}"
+      state: started
+
+  - name: Confirm Docker container is running
+    wait_for:
+      host: localhost
+      port: "{{ app_port }}"
+      state: started

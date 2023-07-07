@@ -1,11 +1,10 @@
 ---
-- name: Configure the EC2
+- name: K8s Install
   hosts: all
   become_method: sudo
   become: yes
   gather_facts: yes
   roles:
-    - system-backend
-    - install_flask
+    - k8s_install
 
 ...

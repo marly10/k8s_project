@@ -1,0 +1,16 @@
+<!doctype html>
+<html>
+  <head>
+    <title>{{ task['title'] }}</title>
+  </head>
+  <body>
+    <h1>{{ task['title'] }}</h1>
+    <p>Description: {{ task['description'] }}</p>
+    <p>Done: {{ task['done'] }}</p>
+    <p><a href="{{ url_for('read_tasks') }}">Back to Tasks</a></p>
+    <p><a href="{{ url_for('update_task', task_id=task_id) }}">Edit Task</a></p>
+    <form action="{{ url_for('delete_task', task_id=task_id) }}" method="post">
+      <input type="submit" value="Delete Task">
+    </form>
+  </body>
+</html>

@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{ plant.name }}</title>
+  </head>
+  <body>
+    <h1>{{ plant.name }}</h1>
+    <p><a href="{{ url_for('read_plants') }}">Back to Plants</a></p>
+    <p>Type: {{ plant.type }}</p>
+    <p>Age: {{ plant.age }}</p>
+  </body>
+</html>
