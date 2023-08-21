@@ -12,7 +12,7 @@
     docker_image:
       build:
         path: /opt/{{ app_name }}/plant_project/application/src
-        dockerfile: dockerfile
+        dockerfile: Dockerfile
       name: "{{ app_name }}"
       tag: latest
 
@@ -32,3 +32,8 @@
       host: localhost
       port: "{{ app_port }}"
       state: started
+
+  tags:
+  - install_flask
+
+...

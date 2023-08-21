@@ -40,9 +40,9 @@ ENV LS_HOME=/usr/share/logstash
 ENV KIBANA_HOME=/usr/share/kibana
 
 # run the command to start the app and the ELK stack components
-CMD ["sh", "-c", "service elasticsearch start && service logstash start && service kibana start && flask run --host=0.0.0.0"]
+CMD ["sh", "-c", "elasticsearch & logstash & kibana & flask run --host=0.0.0.0"]
 
 #docker tag flask-app ricky1101/my-flask-app:v1 
 #docker push ricky1101/my-flask-app:v1
 #docker build -t my-flask-app .
-#docker run -p 5000:5000 -p 9200:9200 -p 9300:9300 -p 5601:5601 my-flask-app
+#docker run -p 5000:5000 -p 9200:9200 -p 9300:9300 -p 5601:5601 flask-app
