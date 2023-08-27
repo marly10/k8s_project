@@ -8,7 +8,7 @@ remote_path="/home/ubuntu/installed_packages.txt"
 ssh_key="/Users/triciamckenzie/.ssh/new_key.cer"
 
 # Local file details
-local_path="/Users/triciamckenzie/Public/installed_packages.txt"
+local_path="/Users/triciamckenzie/Public/plant_project/installed_packages.txt"
 
 # Temporary local file for comparison
 temp_local_path="/tmp/installed_packages.txt"
