@@ -11,6 +11,7 @@
       - curl
       - gnupg
       - lsb-release
+      - git
     register: apt_result
 
   - name: Add Docker GPG key
